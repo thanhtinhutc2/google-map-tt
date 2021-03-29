@@ -52,9 +52,25 @@
                       <input type="text" class="form-control" id="destination" placeholder="Choose destination..." value="">
                     </div>
                   </form>
-                  <div class=" d-flex justify-content-end">
-                    <button class="btn btn-danger" id="go" onclick="calculateAndDisplayRoute()">Go</button>
-                </div>
+
+                  <div class="row">
+                      <div class="col-sm-8 selectList">
+                        <div id="floating-panel">
+                            <select id="mode">
+                              <option value="DRIVING">Driving</option>
+                              <option value="WALKING">Walking</option>
+                              <option value="BICYCLING">Bicycling</option>
+                            </select>
+                          </div>
+                      </div>
+                      <div class="col-sm-4">
+                        <button class="btn btn-danger" id="go" onclick="calculateAndDisplayRoute()">Go</button>
+                      </div>
+                  </div>
+                  
+                  <!-- <div class=" d-flex justify-content-end">
+                    
+                </div> -->
                 <div class="infoDirect">
                     <p class="information" id="time"></p>
                     <p class="information" id="length"></p>
@@ -124,6 +140,7 @@
             $('[data-toggle="tooltip"]').tooltip();
         });
     </script>
+
 </body>
 
 </html>

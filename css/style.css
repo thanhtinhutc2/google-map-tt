@@ -42,11 +42,21 @@
   .wrapper .wrapper-content .direct h4 {
     text-align: center;
   }
+
+  .wrapper .wrapper-content .direct .row .selectList select{
+    padding: 10px 0;
+    border-radius: 10px;
+    background-color: #edec11;
+    color: #000;
+    border: none;
+    font-weight: 800;
+  }
   
   .wrapper .wrapper-content .direct button {
     text-align: right;
     padding: 10px 20px;
     border-radius: 10px;
+    margin-left: 20px;
   }
   
   .wrapper .content .content-search {

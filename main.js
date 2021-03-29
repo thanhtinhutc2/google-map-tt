@@ -3,16 +3,9 @@ const tg = document.getElementById('time');
 const chieuDai = document.getElementById('length');
 
 //Hàm lấy vị trí người dùng tự động
-window.onload = function () {
-  getLocation();
-};
-function getLocation() {
-  if (navigator.geolocation) {
-    navigator.geolocation.getCurrentPosition(showPosition);
-  } else {
-    x.innerHTML = "Geolocation không được hỗ trợ bởi trình duyệt này.";
-  }
-}
+// window.onload = function () {
+//   getLocation();
+// };
 
 function showPosition(position) {
   const latAuto = position.coords.latitude;
@@ -20,6 +13,14 @@ function showPosition(position) {
 
   // console.log(position);
   return latAuto, lngAuto;
+}
+
+function getLocation() {
+  if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(showPosition);
+  } else {
+    x.innerHTML = "Geolocation không được hỗ trợ bởi trình duyệt này.";
+  }
 }
 
 function initMap() {
@@ -67,6 +68,7 @@ function initMap() {
       navigator.geolocation.getCurrentPosition((position) => {
         const lat = position.coords.latitude;
         const lng = position.coords.longitude;
+        console.log(lat, lng);
         const startPoint = document.getElementById('startPoint');
         superagent
           .get(
@@ -77,7 +79,7 @@ function initMap() {
               console.log(err);
               return;
             }
-            // console.log(res);
+            console.log(res);
             //lấy tọa độ địa chỉ mà người dùng nhập vào trong input
             const { lat, lng } = res.body.results[0].geometry.location;
             const location = res.body.results[0].formatted_address;
@@ -105,10 +107,16 @@ function initMap() {
   };
   document.getElementById("startPoint").addEventListener("change", onChangeHandler);
   document.getElementById("destination").addEventListener("change", onChangeHandler);
+  //chọn phương tiện di chuyển
+  document.getElementById("mode").addEventListener("change", () => {
+    calculateAndDisplayRoute(directionsService, directionsRenderer);
+  });
 }
 
 // Hàm chỉ dẫn đường đi
 function calculateAndDisplayRoute(directionsService, directionsRenderer) {
+  const selectedMode = document.getElementById("mode").value;
+  console.log(selectedMode);
   directionsService.route(
     {
       origin: {
@@ -117,7 +125,7 @@ function calculateAndDisplayRoute(directionsService, directionsRenderer) {
       destination: {
         query: document.getElementById("destination").value,
       },
-      travelMode: google.maps.TravelMode.DRIVING,
+      travelMode: google.maps.TravelMode[selectedMode],
     },
     (response, status) => {
       if (status === "OK") {
@@ -136,3 +144,4 @@ function calculateAndDisplayRoute(directionsService, directionsRenderer) {
 
 const yearCur = new Date().getFullYear();
 document.getElementById('copy').innerHTML = "&copy Copyright " + yearCur + " - Lung Tung Tu Team";
+
